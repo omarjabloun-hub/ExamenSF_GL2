@@ -8,15 +8,15 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PFEType extends AbstractType
+class PfeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('title')
-            ->add('NomStudent')
-            ->add('entreprise')
-            ->add("Subimit",SubmitType::class)
+            ->add('student')
+            ->add('Entreprise')
+            ->add('Submit', SubmitType::class) ;
         ;
     }
 

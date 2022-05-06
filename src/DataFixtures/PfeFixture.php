@@ -16,11 +16,14 @@ class PfeFixture extends Fixture
         // $manager->persist($product);
         $faker = Factory::create('fr_FR');
         for ($i=0; $i < 100; $i++) {
+            $repo = $manager->getRepository(Entreprise::class) ;
+            $rand = rand(2,40) ;
+            $entreprise =   $repo->findOneBy(['id' => "$rand"]) ;
             $pfe = new PFE();
 
             $pfe->setTitle($faker->title);
             $pfe->setStudent($faker->name);
-            $pfe->setEntreprise("EY");
+            $pfe->setEntreprise($entreprise);
 
             $manager->persist($pfe);
         }

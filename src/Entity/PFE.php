@@ -6,7 +6,7 @@ use App\Repository\PFERepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PFERepository::class)]
-class PFE 
+class PFE
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,7 +20,7 @@ class PFE
     private $student;
 
     #[ORM\ManyToOne(targetEntity: Entreprise::class, inversedBy: 'pFEs')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $Entreprise;
 
     public function getId(): ?int

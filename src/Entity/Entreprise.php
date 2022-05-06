@@ -60,7 +60,10 @@ class Entreprise
 
         return $this;
     }
-
+    public function __toString()
+    {
+        return $this->designation;
+    }
     public function removePFE(PFE $pFE): self
     {
         if ($this->pFEs->removeElement($pFE)) {

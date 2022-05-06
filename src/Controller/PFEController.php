@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controller;
-use App\Form\PFEType;
+use App\Form\PfeType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,21 +16,21 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class PFEController extends AbstractController
 {
-    #[Route('/add/', name: 'app_add_p_f_e')]
+    #[Route('/add/', name: 'app_add_pfe')]
     public function index(ManagerRegistry $doctrine, Request $request): Response
     {
         $entityManager = $doctrine->getManager();
 
         $pfe = new PFE();
-        $form = $this->createForm(PFEType::class, $pfe);
+        $form = $this->createForm(PfeType::class, $pfe);
 
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $entityManager->persist($pfe);
             $entityManager->flush();
-            return $this->render('', ['pfe' => $pfe]);
+            return $this->render('pfe/index.html.twig', ['pfe' => $pfe]);
         } else {
-            return $this->render('', [
+            return $this->render('pfe/index.html.twig', [
                 'form' => $form->createView()
             ]);
         }
