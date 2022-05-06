@@ -1,8 +1,11 @@
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+              crossorigin="anonymous">
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
@@ -14,6 +17,21 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        Flash Messages
+        {% block body %}
+            <div >
+                {%for flash in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{flash}}
+                    </div>
+                {%endfor%}
+                {%for flash in app.flashes('error') %}
+                    <div class="alert alert-danger">
+                        {{flash}}
+                    </div>
+                {%endfor%}
+
+            </div>
+        {% endblock %}
     </body>
 </html>

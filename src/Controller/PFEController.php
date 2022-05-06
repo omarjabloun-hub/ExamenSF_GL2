@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\Form\PfeType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -8,32 +9,43 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\PFE;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-
 
 class PFEController extends AbstractController
 {
-    #[Route('/add/', name: 'app_add_pfe')]
-    public function index(ManagerRegistry $doctrine, Request $request): Response
+
+    #[Route('/pfe', name: 'app_pfe_root')]
+    public function index2(ManagerRegistry $doctrine): Response
+    {
+        $repo = $doctrine->getRepository(PFE::class);
+        $pfes = $repo->findAll();
+        return $this->render('pfe/index.html.twig', [
+            'pfeet' => $pfes
+        ]);
+    }
+
+    #[Route('/pfe/add', name: 'app_pfe_add')]
+    public function index3(Request $request , ManagerRegistry $doctrine): Response
     {
         $entityManager = $doctrine->getManager();
+        $pfe = new Pfe();
 
-        $pfe = new PFE();
         $form = $this->createForm(PfeType::class, $pfe);
 
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $pfe = $form->getData();
             $entityManager->persist($pfe);
             $entityManager->flush();
-            return $this->render('pfe/index.html.twig', ['pfe' => $pfe]);
+            $pfe = null ;
+            $this->addFlash('success' , 'Ajout avec succes');
+            return $this->redirectToRoute('app_pfe_root');
         } else {
-            return $this->render('pfe/index.html.twig', [
-                'form' => $form->createView()
+            return $this->renderForm('pfe/addPfe.html.twig', [
+                'form' => $form,
             ]);
         }
 
 
-    }}
+    }
+}

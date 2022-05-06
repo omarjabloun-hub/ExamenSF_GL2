@@ -16,7 +16,7 @@ class PfeType extends AbstractType
             ->add('title')
             ->add('student')
             ->add('Entreprise')
-            ->add('Submit', SubmitType::class) ;
+            ->add('Submit' , SubmitType::class)
         ;
     }
 
