@@ -12,14 +12,17 @@ use App\Entity\PFE;
 
 class PFEController extends AbstractController
 {
-
-    #[Route('/pfe', name: 'app_pfe_root')]
-    public function index2(ManagerRegistry $doctrine): Response
+    #[Route('/pfe/{numPage<\d+>?1}', name: 'app_pfe_root')]
+    public function index2(ManagerRegistry $doctrine , $numPage): Response
     {
         $repo = $doctrine->getRepository(PFE::class);
-        $pfes = $repo->findAll();
+        $pfes = $repo->findBy([] ,array() , 8 ,8*$numPage);
+        $nbPage = ceil($repo->count([]) / 8)-1 ;
         return $this->render('pfe/index.html.twig', [
-            'pfeet' => $pfes
+            'pfeet' => $pfes ,
+            'numPage'=> $numPage ,
+            'nbPage' => $nbPage ,
+
         ]);
     }
 
@@ -37,9 +40,10 @@ class PFEController extends AbstractController
             $pfe = $form->getData();
             $entityManager->persist($pfe);
             $entityManager->flush();
-            $pfe = null ;
             $this->addFlash('success' , 'Ajout avec succes');
-            return $this->redirectToRoute('app_pfe_root');
+            return $this->render('pfe/new.html.twig',[
+                'pfe' => $pfe ,
+            ]);
         } else {
             return $this->renderForm('pfe/addPfe.html.twig', [
                 'form' => $form,

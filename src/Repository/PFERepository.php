@@ -47,6 +47,26 @@ class PFERepository extends ServiceEntityRepository
         }
     }
 
+    public function PfeGroupedByEntreprise(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+                SELECT designation , count(entreprise_id) as nbEnt  FROM pfe  
+                INNER JOIN entreprise ON entreprise_id = entreprise.id 
+                GROUP BY entreprise_id 
+                ORDER BY designation 
+                ;
+             ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery([
+//            'edhika' => $kk ,
+//            'hedha' => $ll,
+            ]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
 //    /**
 //     * @return PFE[] Returns an array of PFE objects
 //     */

@@ -1,0 +1,20 @@
+{% extends  'base.html.twig'%}
+{#{%extends 'bootstrap_3_layout.html.twig'%}#}
+{%block title%}
+    {{pfe.Student}}
+{%endblock%}
+
+{%block body%}
+    {{ parent( ) }}
+    <div class="container row">
+
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">{{ pfe.Student }}</h5>
+                <p class="card-text">{{pfe.Title}}</p>
+                <p class="card-text">{{pfe.Entreprise}}</p>
+            </div>
+        </div>
+
+    </div>
+{%endblock%}
