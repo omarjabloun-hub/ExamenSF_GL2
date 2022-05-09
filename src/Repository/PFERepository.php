@@ -47,20 +47,20 @@ class PFERepository extends ServiceEntityRepository
         }
     }
 
-    public function PfeGroupedByEntreprise(): array
+    public function PfeGroupedByEntreprise(int $lim , int $off): array
     {
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = '
-                SELECT designation , count(entreprise_id) as nbEnt  FROM pfe  
-                INNER JOIN entreprise ON entreprise_id = entreprise.id 
-                GROUP BY entreprise_id 
-                ORDER BY designation 
+        $sql = "
+                SELECT designation , count(entreprise_id) as nbEnt  FROM pfe
+                                                             INNER JOIN entreprise ON entreprise_id = entreprise.id
+GROUP BY entreprise_id
+ORDER BY designation ASC
+LIMIT $lim  OFFSET $off ;
                 ;
-             ';
+             ";
         $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery([
-            ]);
+        $resultSet = $stmt->executeQuery();
 
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();

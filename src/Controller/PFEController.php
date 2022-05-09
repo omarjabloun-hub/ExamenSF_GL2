@@ -16,8 +16,8 @@ class PFEController extends AbstractController
     public function index2(ManagerRegistry $doctrine , $numPage): Response
     {
         $repo = $doctrine->getRepository(PFE::class);
-        $pfes = $repo->findBy([] ,array() , 10 ,10*$numPage);
-        $nbPage = ceil($repo->count([]) / 10)-1 ;
+        $pfes = $repo->findBy([] ,array() , 10 ,10*$numPage - 10);
+        $nbPage = ceil($repo->count([]) / 10) ;
         return $this->render('pfe/index.html.twig', [
             'pfeet' => $pfes ,
             'numPage'=> $numPage ,

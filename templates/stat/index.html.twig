@@ -14,10 +14,10 @@
     <br>
     <div class="container row col-12">
 
-
+        {%set index = 0%}
         {%for re in res %}
             <div class="container col-3">
-                <div class="card" style="width: 18rem;">
+                <div class="card text-dark bg-{%if index is odd%}light{%else%}warning{%endif%} mb-3"style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">{{ re.designation }}</h5>
                         <p class="card-text">{{ re.nbEnt }} Pfe(s) </p>
@@ -26,5 +26,46 @@
                 </div>
                 <br>
             </div>
+            {% set index = index + 1 %}
         {%endfor%}
+        <div class="d-flex justify-content-center" style="text-align-all: center" >
+            <nav style="text-align : center" aria-label="Page navigation example">
+                <ul class="pagination">
+                    {%if numPage != 1 %}
+                        <li class="page-item">
+                            <a class="page-link" href="{{path('app_stat',{ numPage :  numPage - 1})}}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li class="page-item" ><a class="page-link" href="{{path('app_stat',{ numPage : 1 })}}"> << </a></li>
+                    {% endif %}
+
+
+                    {%for i in numPage-1 .. numPage+1 %}
+                        {%if i in 1 .. nbPage %}
+                            <li class="page-item" >
+                                <a class="page-link"
+                                        {%if numPage == i %}
+                                            style="background-color: #DDDDDD"
+                                        {%endif%}
+                                   href="{{path('app_stat',{ numPage : i })}}">{{i}}</a></li>
+                        {%endif%}
+                    {%endfor%}
+
+
+                    {%if numPage != nbPage %}
+                        <li class="page-item" ><a class="page-link" href="{{path('app_stat',{ numPage : nbPage })}}"> >> </a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="{{path('app_stat',{ numPage : numPage +1})}}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+    </div>
 {%endblock%}

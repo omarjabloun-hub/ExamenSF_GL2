@@ -10,13 +10,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StatController extends AbstractController
 {
-    #[Route('/stat', name: 'app_stat')]
-    public function index(ManagerRegistry $doctrine ): Response
+    #[Route('/stat/{numPage<\d+>?1}', name: 'app_stat')]
+    public function index(ManagerRegistry $doctrine ,$numPage): Response
     {
         $repo = $doctrine->getRepository(PFE::class ) ;
-       $req = $repo->PfeGroupedByEntreprise() ;
+       $req = $repo->PfeGroupedByEntreprise( 10, 10*($numPage - 1) ) ;
+       $req1 = $repo->PfeGroupedByEntreprise(200,0) ;
+        $nbPage = ceil(count($req1) / 10)   ;
         return $this->render('stat/index.html.twig', [
             'res' => $req,
+            'numPage'=> $numPage ,
+            'nbPage' => $nbPage ,
         ]);
     }
 }
