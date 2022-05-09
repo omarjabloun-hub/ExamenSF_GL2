@@ -60,8 +60,6 @@ class PFERepository extends ServiceEntityRepository
              ';
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery([
-//            'edhika' => $kk ,
-//            'hedha' => $ll,
             ]);
 
         // returns an array of arrays (i.e. a raw data set)
