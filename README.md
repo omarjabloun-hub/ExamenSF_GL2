@@ -17,4 +17,4 @@ avec une navigation de page au dessous
 
 Statistiques Nombre de Pfe par Entreprise
 
-![image](https://user-images.githubusercontent.com/73075992/167262864-410a4ee0-4ab4-41d9-8263-07545866f901.png)
+![image](https://user-images.githubusercontent.com/73075992/168142386-224f7e37-e2e2-43de-b22e-8a0b33290aef.png)
